@@ -1,0 +1,67 @@
+db
+// 1 / 2 //
+use ecommerce
+
+db.productos.insert([{name: 'Lapiz', price: 120, thumbnail: 'lapiz.jpg'},
+                     {name: 'Escuadra', price: 580, thumbnail: 'Escuadra.jpg'},
+                     {name: 'Compas', price: 900, thumbnail: 'Compas.jpg'},
+                     {name: 'Cartuchera', price: 1000, thumbnail: 'Cartuchera.jpg'},
+                     {name: 'Calculadora', price: 1700, thumbnail: 'Calculadora.jpg'},
+                     {name: 'Impresora', price: 2300, thumbnail: 'Impresora.jpg'},
+                     {name: 'Globo', price: 2860, thumbnail: 'Globo.jpg'},
+                     {name: 'Lapicera', price: 3350, thumbnail: 'Lapicera.jpg'},
+                     {name: 'Mouse', price: 4320, thumbnail: 'Mouse.jpg'},
+                     {name: 'Teclado', price: 4990, thumbnail: 'Teclado.jpg'},
+                    ]);
+
+db.mensajes.insert([{author: 'Agus', text: 'Hola'},
+                    {author: 'Pablo', text: 'Como va?'},
+                    {author: 'Fran', text: 'Vendo PC'},
+                    {author: 'Maxi', text: 'A cuanto?'},
+                    {author: 'Mica', text: 'Vendo PC gamer 500USD'},
+                    {author: 'Fede', text: 'La compro!'},
+                    {author: 'Mati', text: 'Quiero comprar un teclado'},
+                    {author: 'Javi', text: 'Cuesta $4990'},
+                    {author: 'Bauti', text: 'Yo un mouse'},
+                    {author: 'Beni', text: 'ah, cuesta 4320'},
+                    ]);
+// 3 //
+show collections
+
+db.productos.find()
+db.mensajes.find()
+
+// 4 //
+db.productos.estimatedDocumentCount()
+db.mensajes.estimatedDocumentCount()
+
+// 5 //
+/ a / 
+db.productos.insertOne({name: 'Regla', price: 250, thumbnail: 'Regla.jpg'})
+
+/ b /
+db.productos.find({"price": {$lt: 1000}})
+
+db.productos.find({$and: [
+    {"price": {$lte: 3000}},
+    {"price": {$gte: 1000}}
+]})
+
+db.productos.find({"price": {$gt: 3000}})
+
+db.productos.find({}, {"name": 1, "_id": 0}).skip(3).limit(1).sort({"price": 1})
+
+/ c /
+db.productos.update({}, {$set: {stock: 100}}, {multi: true})
+
+/ d /
+db.productos.update({"price": {$gt: 4000}}, {$set: {"stock": 0}}, {multi: true})
+
+/ e /
+db.productos.deleteMany({"price": {$lt: 1000}})
+
+
+// 6 //
+
+use admin
+db.createUser({user: "Pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}]})
